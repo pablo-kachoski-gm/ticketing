@@ -34,6 +34,10 @@ https://skaffold.dev/docs/install/
 Edit hosts file and add the following line
 127.0.0.1 ticketing.dev
 
+## Kubernetes additional config
+
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=ticketing-jwt-key
+
 ## From project base folder
 
 Run in console: skaffold dev
