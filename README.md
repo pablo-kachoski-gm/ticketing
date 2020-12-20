@@ -38,6 +38,16 @@ Edit hosts file and add the following line
 
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=ticketing-jwt-key
 
+## Build docker images
+
+auth directory run:
+
+- docker build -t paka/auth .
+
+tickets directory run:
+
+- docker build -t paka/tickets .
+
 ## From project base folder
 
 Run in console: skaffold dev
