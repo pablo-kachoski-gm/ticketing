@@ -17,11 +17,11 @@ const FormField = styled.div`
   justify-content: space-between;
 `;
 
-const SignUp = () => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { doRequest, errors } = useRequest({
-    url: "/api/users/signup",
+    url: "/api/users/signin",
     method: "post",
     body: {
       email,
@@ -41,7 +41,7 @@ const SignUp = () => {
   return (
     <form onSubmit={onSubmit}>
       <FormContent>
-        <h1>Sign up</h1>
+        <h1>Sign in</h1>
         <FormField>
           <label>Email Address</label>
           <input value={email} onChange={onEmailChange} />
@@ -51,9 +51,9 @@ const SignUp = () => {
           <input value={password} onChange={onPasswordChange} type="password" />
         </FormField>
         {errors}
-        <button>Sign Up</button>
+        <button>Sign in</button>
       </FormContent>
     </form>
   );
 };
-export default SignUp;
+export default SignIn;

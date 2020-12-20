@@ -1,5 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-
+import buildClient from "../api/build-client";
+import Header from "../components/header";
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -18,13 +19,29 @@ const theme = {
   },
 };
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps, currentUser }) {
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <div>
+          <Header currentUser={currentUser} />
+          <Component {...pageProps} />
+        </div>
       </ThemeProvider>
     </>
   );
 }
+
+App.getInitialProps = async (appContext) => {
+  const { ctx } = appContext;
+  const client = buildClient(ctx);
+  const { data } = await client.get("/api/users/currentuser");
+
+  let pageProps = {};
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(ctx);
+  }
+  return { pageProps, ...data };
+};
+export default App;
