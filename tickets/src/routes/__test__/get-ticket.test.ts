@@ -1,10 +1,11 @@
+import mongoose from "mongoose";
 import request from "supertest";
 import { app } from "../../app";
 import { signin } from "../../test/auth-helper";
 
 it("returns a 404 if the ticket is not found", async () => {
-  const response = await request(app).get("/api/tickets/asdadasdd").send({});
-  expect(response.status).not.toEqual(404);
+  const id = new mongoose.Types.ObjectId().toHexString();
+  await request(app).get(`/api/tickets/${id}`).send().expect(404);
 });
 
 it("returns the ticket if the ticket is found", async () => {
@@ -18,7 +19,7 @@ it("returns the ticket if the ticket is found", async () => {
 
   const getResponse = await request(app)
     .get(`/api/tickets/${createResponse.body.id}`)
-    .send({ title, price })
+    .send()
     .expect(200);
 
   expect(getResponse.body.title).toEqual(title);
